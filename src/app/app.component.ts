@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'parent-assessment';
+  dynamicTitle: string = 'Spaces';
+  constructor(
+    private titleService: Title,
+
+  ) {
+    this.titleService.setTitle(this.dynamicTitle);
+  }
 }
