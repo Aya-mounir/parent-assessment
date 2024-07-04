@@ -1,0 +1,41 @@
+.auh_layout{
+  .auth_container{
+    width: 50%;
+    border-radius: 10px;
+    background-color: #fff;
+    height: 40rem;
+    box-shadow: #dcdcdc 0px 2px 5px;
+
+    @media (max-width:1400px) {
+      width: 60%;
+    }
+    @media (max-width:1200px) {
+      width: 80%;
+    }
+    @media (max-width:750px) {
+      width: 70%;
+    }
+    @media (max-width:500px) {
+      width: 95%;
+    }
+    .cover{
+      width: 50%;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      background-image: url(../../../../../assets/images/auth/auth_cover.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      @media (max-width:750px) {
+        display: none;
+      }
+    }
+    .auth_router{
+      width: 50%;
+      @media (max-width:750px) {
+        width: 100%;
+      }
+
+    }
+  }
+}

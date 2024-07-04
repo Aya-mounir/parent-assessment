@@ -1,5 +1,55 @@
+@import "../variables/variables";
+// ========================== Shared Styling ==============================
+p {
+  margin: 0 !important;
+}
+body {
+  margin: unset;
+}
+// =========================== buttons ====================================
+button {
+  border: none;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+}
+// filled button and nav item style
+.filled {
+  background-color: $main_color;
+  color: #fff;
+  border-radius: 50px;
+  box-shadow: #00000047 0px 2px 5px;
+}
 
-p{
-  margin: 0;
-  padding: 0;
+// outlined button style
+.outline_button {
+}
+
+// ================================= form ============================
+.form_item {
+  width: 100%;
+  border-radius: 8px;
+  color: $gray;
+  margin-bottom: 1.5rem;
+  label {
+    display: block;
+    color: $gray;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  input {
+    width: 100%;
+    border: 1px solid $input_border;
+    border-radius: 6px;
+    color: $gray;
+    padding: 8px;
+    font-size: 1rem;
+    &::placeholder {
+      color: $gray;
+      font-size: 1rem;
+    }
+    &:focus {
+      outline-color: $main_color;
+      outline-width: 1px !important;
+    }
+  }
 }
