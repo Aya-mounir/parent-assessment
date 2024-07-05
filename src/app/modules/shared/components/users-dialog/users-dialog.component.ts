@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { UsersService } from 'src/app/core/services/features/users.service';
+import { resetUser } from 'src/app/core/store/actions';
 
 @Component({
   selector: 'app-users-dialog',
@@ -22,7 +23,6 @@ export class UsersDialogComponent {
   userForm: FormGroup;
   loading: boolean = false;
   user: any;
-
   constructor(
     private _UsersService: UsersService,
     private _MessageService: MessageService,
@@ -43,7 +43,8 @@ export class UsersDialogComponent {
   ngOnChanges(): void {
     // check if id found then update
     // so i get user by id to update on his data
-    if (this.user.id != -1) {
+    if (this.isUpdate) {
+      // in update set user info into inputs
       this.userForm = this.formBuilder.group({
         name: [
           this.user.first_name + ' ' + this.user.last_name,
@@ -51,15 +52,11 @@ export class UsersDialogComponent {
         ],
         job: ['', [Validators.required]],
       });
-    } else {
-      this.userForm = this.formBuilder.group({
-        name: ['', [Validators.required]],
-        job: ['', [Validators.required]],
-      });
     }
   }
 
   //  ======================= Functions =======================
+  // emit to close dialog
   cancel() {
     this.close.emit(false);
   }
@@ -70,13 +67,15 @@ export class UsersDialogComponent {
 
     if (this.userForm.valid) {
       // if form Valid
-      const payload = {
+
+      // body of request data
+      const body = {
         name: this.userForm.value.name,
         job: this.userForm.value.job,
       };
       if (this.user.id == -1) {
         // Add New User
-        this._UsersService.addUser(payload).subscribe(
+        this._UsersService.addUser(body).subscribe(
           (res: any) => {
             this._MessageService.add({
               severity: 'success',
@@ -104,7 +103,7 @@ export class UsersDialogComponent {
         );
       } else {
         // Update User
-        this._UsersService.updateUser(this.user.id, payload).subscribe(
+        this._UsersService.updateUser(this.user.id, body).subscribe(
           (res: any) => {
             this._MessageService.add({
               severity: 'success',
@@ -142,7 +141,8 @@ export class UsersDialogComponent {
 
   // reset Form
   resetForm() {
-    this.user = { id: -1 };
+    this.store.dispatch(resetUser()); //reset
+    //reset form
     this.userForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       job: ['', [Validators.required]],
@@ -152,7 +152,6 @@ export class UsersDialogComponent {
   // delete user
   deleteUser() {
     this.loading = true;
-    // Add New User
     this._UsersService.deleteUser(this.user.id).subscribe(
       (res: any) => {
         // close dialog after success

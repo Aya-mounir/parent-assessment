@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { UsersService } from 'src/app/core/services/features/users.service';
@@ -17,10 +17,9 @@ export class UsersListComponent {
   perPage: number = 5;
   totalUsers: number = 0;
   loadMore: boolean = false;
-  updateVisible: boolean = false;
-  userUpdate: any = { id: -1 };
-  isDeleteUser: boolean = false;
-  selectUser: any;
+  dialogVisible: boolean = false;
+  isDeleteUser: boolean = false; //check if i want to delete or update
+  selectedUser: any; //current user info
 
   constructor(
     private usersService: UsersService,
@@ -28,7 +27,7 @@ export class UsersListComponent {
     private store: Store
   ) {
     store.subscribe((res: any) => {
-      this.selectUser = res.user.user;
+      this.selectedUser = res.user.user;
     });
   }
 
@@ -41,8 +40,8 @@ export class UsersListComponent {
   // ================ Functions ===================
   // get All Users
   getAllUsers(page: number, perPage: number) {
-    this.loadMore = true;
-    let params = '?page=' + page + '&per_page=' + perPage;
+    this.loadMore = true; //make loader visible
+    let params = '?page=' + page + '&per_page=' + perPage;//set current page and users per page
     this.usersService.getAllUsers(params).subscribe(
       (res: any) => {
         this.loadMore = false;
@@ -60,30 +59,28 @@ export class UsersListComponent {
     );
   }
 
-  // add new
+  // get user details
   getuserDetails(user: any) {
-    this.store.dispatch(loadUser({ user: user }));
-    this.selectUser = user;
+    this.store.dispatch(loadUser({ user: user }));//change user info from store with new user
+    this.selectedUser = user;
   }
 
-  // delete
+  // delete user
   deleteUser(user: any) {
-    this.store.dispatch(loadUser({ user: user }));
-    this.updateVisible = true;
+    this.store.dispatch(loadUser({ user: user })); //change user info from store with new user
+    this.dialogVisible = true;
     this.isDeleteUser = true;
-    this.selectUser = user;
   }
 
-  // update
+  // update user
   updateUser(user: any) {
-    this.store.dispatch(loadUser({ user: user }));
-    this.updateVisible = true;
+    this.store.dispatch(loadUser({ user: user }));//change user info from store with new user
+    this.dialogVisible = true;
     this.isDeleteUser = false;
-    this.selectUser = user;
   }
 
-  // close Update
-  closeUpdate() {
-    this.updateVisible = false;
+  // close Update Dialog
+  closeDialog() {
+    this.dialogVisible = false;
   }
 }

@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { loadUser } from 'src/app/core/store/actions';
-import { selectUser } from 'src/app/core/store/selectors';
-import { User } from 'src/app/core/store/user.model';
 
 @Component({
   selector: 'app-users',
@@ -22,7 +18,7 @@ export class UsersComponent {
   }
 
   // ================ Functions ===================
-
+  // close add new user dialog
   closeAddNew() {
     this.addNewVisible = false;
   }
