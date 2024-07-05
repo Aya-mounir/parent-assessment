@@ -1,9 +1,10 @@
-.auh_layout{
+.auth_layout{
+  height: calc(100vh - 76.79px);
   .auth_container{
     width: 50%;
     border-radius: 10px;
     background-color: #fff;
-    height: 40rem;
+    height: fit-content;
     box-shadow: #dcdcdc 0px 2px 5px;
 
     @media (max-width:1400px) {
@@ -31,6 +32,7 @@
       }
     }
     .auth_router{
+      padding: 5rem 0;
       width: 50%;
       @media (max-width:750px) {
         width: 100%;

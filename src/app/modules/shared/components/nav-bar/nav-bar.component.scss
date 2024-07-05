@@ -1,8 +1,10 @@
 @import "../../../../../assets/styles/variables/variables";
 
 .nav_bar {
-  box-shadow: #dcdcdc 0px 2px 5px;
+  box-shadow: #766e6e5c 0px 2px 9px;
   background-color: #fff;
+  position: relative;
+  z-index: 2;
   .logo {
     img {
       width: 2.8rem;

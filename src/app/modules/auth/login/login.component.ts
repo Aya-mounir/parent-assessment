@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/core/services/features/auth.service';
 export class LoginComponent {
   // Initialization
   loginForm!: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,6 +33,7 @@ export class LoginComponent {
 
   // submit function to login
   onSubmit() {
+    this.loading = true;
     // check if inputs is valid and not empty
     if (
       (this.loginForm.value.email != '' ||
@@ -46,6 +48,8 @@ export class LoginComponent {
       // make a request
       this._AuthService.login(body).subscribe(
         (res: any) => {
+          this.loading = false;
+
           // store token
           localStorage.setItem('token', res.token);
           this._MessageService.add({
@@ -53,40 +57,35 @@ export class LoginComponent {
             summary: 'Success',
             detail: `Logged in Succefuly :)`,
           });
-          this._Router.navigate(['pages/category/view']);
+          this._Router.navigate(['pages/enquire']);
         },
         (err) => {
-          console.log(err);
+          this.loading = false;
+
           this._MessageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: `Email or Password doesn't Correct`,
+            detail: err.error.error ? err.error.error : 'Something went wrong!',
           });
         }
       );
-    } else if (this.loginForm.value.password == '') {
+    } else {
       // check if password field is empty
-      this._MessageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: `Password is Missing!`,
-      });
-    }
-    // // check if email field is not valid
-    // if (this.loginForm.valid == false) {
-    //   this._MessageService.add({
-    //     severity: 'error',
-    //     summary: 'Error',
-    //     detail: `Email is not Valid!`,
-    //   });
-    // }
-    if (this.loginForm.value.email == '') {
+      if (this.loginForm.value.password == '') {
+        this._MessageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Password is Missing!`,
+        });
+      }
       // check if email is empty
-      this._MessageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: `Email is Missing!`,
-      });
+      if (this.loginForm.value.email == '') {
+        this._MessageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Email is Missing!`,
+        });
+      }
     }
   }
 }

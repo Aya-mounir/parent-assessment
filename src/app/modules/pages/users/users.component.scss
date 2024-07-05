@@ -1,0 +1,17 @@
+@import "../../../../assets/styles/variables/variables";
+.users_page {
+  .bread_crumb {
+    background-color: $nav_gray_background;
+    box-shadow: rgb(118, 110, 110, 0.6) 0px 2px 9px;
+    h2 {
+      color: $dark_gray;
+    }
+    .links {
+      color: $dark_gray;
+      span {
+        color: $main_color;
+      }
+      cursor: pointer;
+    }
+  }
+}

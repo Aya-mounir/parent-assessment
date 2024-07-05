@@ -2,6 +2,7 @@
 // ========================== Shared Styling ==============================
 p {
   margin: 0 !important;
+  color: $dark_gray;
 }
 body {
   margin: unset;
@@ -52,4 +53,8 @@ button {
       outline-width: 1px !important;
     }
   }
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

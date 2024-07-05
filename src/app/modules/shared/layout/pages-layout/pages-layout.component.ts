@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./pages-layout.component.scss']
 })
 export class PagesLayoutComponent {
+  // initializations
+  navItems: any = [
+    { title: 'home', active: false },
+    { title: 'about', active: false },
+    { title: 'contact', active: false },
+    { title: 'enquire', active: false },
+  ];
 
 }

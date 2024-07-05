@@ -38,7 +38,15 @@
         class="form_actions d-flex align-items-center justify-content-between"
       >
         <div class="forget_password">Forgot password?</div>
-        <button class="filled">LOGIN</button>
+        <button class="filled">
+          LOGIN
+          <div
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </button>
       </div>
     </form>
     <!-- Form End -->
