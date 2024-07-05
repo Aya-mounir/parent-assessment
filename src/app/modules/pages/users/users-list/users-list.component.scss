@@ -1,0 +1,100 @@
+@import "../../../../../assets/styles/variables/variables";
+.users_list_page {
+  min-height: fit-content;
+  height: calc(100vh - 245px);
+  overflow: auto;
+  .header {
+    .user,
+    .actions {
+      color: $gray;
+    }
+  }
+  h2 {
+    color: $dark_gray;
+  }
+  .content {
+    border-bottom: 1px solid $input_border;
+    cursor: pointer;
+    .row {
+      padding: 0.4rem;
+      border-radius: 6px;
+      &:hover {
+        background-color: $hover_main;
+      }
+    }
+    .focused,.focused:hover{
+      .user{
+        .name{
+          color: #fff;
+        }
+        img{
+          border: 1px solid #fff;
+        }
+      }
+      .actions{
+        .update_delete{
+          display: none !important;
+        }
+      }
+      background-color: $main_color;
+      .fa-chevron-right{
+        color: #fff;
+      }
+    }
+
+    .user {
+      img {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+      }
+      .name {
+        text-transform: capitalize;
+      }
+    }
+    .actions {
+      position: relative;
+      z-index: 10;
+      i {
+        padding: 0.3rem;
+        background-color: #fff;
+      }
+    }
+    .fa-chevron-right {
+      color: $main_color;
+      background-color: transparent !important;
+    }
+  }
+  div.content:last-of-type {
+    border: none;
+  }
+  .load_more {
+    /* HTML: <div class="loader"></div> */
+    .loader {
+      position: relative;
+      --d: 11px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      color: $main_color;
+      box-shadow: calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
+        calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 0.7px,
+        calc(0 * var(--d)) calc(1 * var(--d)) 0 1px,
+        calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 1.5px,
+        calc(-1 * var(--d)) calc(0 * var(--d)) 0 2px,
+        calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 2.5px,
+        calc(0 * var(--d)) calc(-1 * var(--d)) 0 3px;
+      animation: l27 1s infinite steps(8);
+    }
+    @keyframes l27 {
+      100% {
+        transform: rotate(1turn);
+      }
+    }
+    color: $main_color;
+    font-weight: 500;
+    span {
+      cursor: pointer;
+    }
+  }
+}

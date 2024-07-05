@@ -1,0 +1,79 @@
+@import "../variables/variables";
+// ========================== Shared Styling ==============================
+p {
+  margin: 0 !important;
+  color: $dark_gray;
+}
+body {
+  margin: unset;
+}
+
+// filled button and nav item style
+.filled {
+  background-color: $main_color;
+  color: #fff;
+  border-radius: 50px;
+  box-shadow: #00000047 0px 2px 5px;
+  &:hover{
+    background-color: $hover_main;
+  }
+}
+
+// outlined button style
+.outlined {
+  background-color: #fff;
+  color:$main_color;
+  border-radius: 50px;
+  border: 1px solid $main_color;
+  border-radius: 3px;
+  &:hover{
+    background-color: $main_color !important;
+    color: #fff !important;
+    }
+}
+// =========================== buttons ====================================
+button {
+  border: none;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  border-radius: 50px;
+
+}
+
+// ================================= form ============================
+.form_item {
+  width: 100%;
+  border-radius: 8px;
+  color: $gray;
+  margin-bottom: 1.5rem !important;
+  label {
+    display: block;
+    color: $gray;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  input {
+    width: 100%;
+    border: 1px solid $input_border;
+    border-radius: 6px;
+    color: $dark_gray;
+    padding: 8px;
+    font-size: 1rem;
+    &::placeholder {
+      color: $gray;
+      font-size: 1rem;
+    }
+    &:focus {
+      outline-color: $main_color;
+      outline-width: 1px !important;
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.p-error{
+  font-size: 0.8rem;
+}

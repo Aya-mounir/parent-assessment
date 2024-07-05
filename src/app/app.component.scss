@@ -1,0 +1,8 @@
+@import '../assets/styles/variables/variables';
+.app_container{
+  background-color: $main_background;
+  min-height: 100vh;
+  height: fit-content;
+  overflow: scroll;
+
+}

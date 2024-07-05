@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+}
+.users_dialog {
+  .btns {
+    button {
+      width: calc(50% - 6px);
+      border-radius: 50px;
+    }
+  }
+  .avatar {
+    background-color: gray;
+    width: 6rem;
+    height: 6rem;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    position: relative;
+    margin-top: -4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    i{
+      font-size: 4rem;
+      color: #fff;
+    }
+    img{
+      border-radius: 50%;
+width: 100%;
+    }
+  }
+}
+::ng-deep {
+  .p-dialog-mask.p-component-overlay {
+    background: rgba(52, 64, 84, 0.7);
+    // backdrop-filter: blur(8px);
+  }
+  .p-dialog-content {
+    position: relative;
+    width: 40rem;
+    @media (max-width: 1300rem) {
+      width: 31%;
+    }
+    @media (max-width: 1300rem) {
+      width: 100%;
+    }
+  }
+  .p-dialog .p-dialog-header {
+    display: none !important;
+  }
+  .p-dialog {
+    border-radius: 12px;
+  }
+  .p-dialog .p-dialog-content {
+    overflow: visible;
+    border-radius: 12px;
+    align-self: stretch;
+    padding: 1.5rem !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 24rem !important;
+  }
+}

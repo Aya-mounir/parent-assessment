@@ -1,0 +1,44 @@
+@import "../../../../assets/styles/variables/variables";
+.users_page {
+  .bread_crumb {
+    background-color: $nav_gray_background;
+    box-shadow: rgb(118, 110, 110, 0.6) 0px 2px 9px;
+    h2 {
+      color: $dark_gray;
+    }
+    .links {
+      color: $dark_gray;
+      span {
+        color: $main_color;
+      }
+      cursor: pointer;
+    }
+  }
+  .users_list{
+    background-color: #fff;
+    border-radius: 10px;
+    height: fit-content;
+    box-shadow: #dcdcdc 0px 2px 5px;
+    @media (max-width:800px) {
+      flex-direction: column-reverse;
+    }
+  }
+  .list.part{
+    width: 75%;
+    @media (max-width:1200px) {
+      width: 60%;
+    }
+    @media (max-width:800px) {
+      width: 100%;
+    }
+  }
+  .details{
+    width: 25%;
+    @media (max-width:1200px) {
+      width: 40%;
+    }
+    @media (max-width:800px) {
+      width: 100%;
+    }
+  }
+}

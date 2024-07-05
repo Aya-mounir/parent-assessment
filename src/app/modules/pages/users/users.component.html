@@ -1,0 +1,50 @@
+<div class="users_page w-100">
+  <div class="bread_crumb py-2 mb-4 w-100">
+    <div class="container">
+      <p class="links"><span>Home</span> / <span>Dashboard</span></p>
+      <!-- Page Details -->
+      <div
+        class="page_details d-flex align-items-center justify-content-between mt-3"
+      >
+        <h2>Users List</h2>
+        <button
+          class="filled px-2 d-flex align-items-center mx-1"
+          (click)="addNewVisible = true"
+        >
+          <i class="pi pi-plus mx-1"></i>
+          New User
+        </button>
+      </div>
+      <!-- Page Details End -->
+    </div>
+  </div>
+  <div class="container users_list d-flex p-0 flex-wrap">
+    <!-- users List -->
+    <app-users-list
+      (userId)="getUserId($event)"
+      class="list"
+      [selectedUser]="user"
+      [ngClass]="user.id == -1 ? 'w-100' : 'part'"
+    ></app-users-list>
+    <!-- users List End -->
+
+    <!-- user details -->
+    <app-user-details
+      *ngIf="user.id != -1"
+      class="details"
+      (closeDetails)="closeDetails()"
+      [user]="user"
+    ></app-user-details>
+    <!-- user details End -->
+  </div>
+</div>
+
+<!-- Add User -->
+<app-users-dialog
+*ngIf="addNewVisible"
+  [visible]="addNewVisible"
+  (close)="closeAddNew()"
+  [user]="{id:-1}"
+  [isDelete]="false"
+></app-users-dialog>
+<!-- Add User End -->
