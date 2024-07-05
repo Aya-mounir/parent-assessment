@@ -1,5 +1,6 @@
 export const ApiUrls = {
-  Auth:{
+  auth:{
     login:"Login",
   },
+  users:'users'
 }

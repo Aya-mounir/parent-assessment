@@ -1,4 +1,7 @@
 <div class="users_list_page w-100">
+  <!-- Toast -->
+  <p-toast></p-toast>
+  <!-- Toast End-->
   <!-- header -->
   <div class="row header m-0 mb-4 w-100">
     <div class="user col-10">User</div>
@@ -6,11 +9,17 @@
   </div>
   <!-- header -->
   <!-- user -->
-  <div class="content user w-100 py-2">
+  <div
+    *ngIf="!users"
+    class="w-100 h-100 d-flex align-items-center justify-content-center"
+  >
+    <h2>No Users Found!</h2>
+  </div>
+  <div class="content user w-100 py-2" *ngFor="let user of users">
     <div class="row w-100 m-0 py-2 d-flex align-items-center">
       <div class="user col-md-10 col-9 d-flex align-items-center">
-        <img src="" alt="" />
-        <p class="name mx-3">name</p>
+        <img [src]="user.avatar" [alt]="user.first_name" />
+        <p class="name mx-3">{{ user.first_name }} {{ users.last_name }}</p>
       </div>
       <div class="actions col-md-1 col-2 d-flex align-items-center">
         <i class="edit outlined fa-solid fa-pen"> </i>
@@ -20,6 +29,25 @@
         <i class="fa-solid fa-chevron-right"></i>
       </div>
     </div>
+  </div>
+  <div
+    *ngIf="totalUsers > 5 && users.length <= 5"
+    class="w-100 load_more text-center py-3 d-flex align-items-center flex-column"
+  >
+    <div class="loader mb-3" *ngIf="loadMore"></div>
+    <span (click)="getAllUsers(1, totalUsers)"
+      >Load More Uers <i class="fa-solid fa-chevron-right"></i
+    ></span>
+  </div>
+  <div
+    *ngIf="users.length > 5"
+    class="w-100 load_more text-center py-3 d-flex align-items-center flex-column"
+  >
+    <div class="loader mb-3" *ngIf="loadMore"></div>
+
+    <span (click)="getAllUsers(1, 5)"
+      >Load Less Uers <i class="fa-solid fa-chevron-right"></i
+    ></span>
   </div>
   <!-- user End -->
 </div>
