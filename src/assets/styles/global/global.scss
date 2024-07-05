@@ -19,6 +19,9 @@ button {
   color: #fff;
   border-radius: 50px;
   box-shadow: #00000047 0px 2px 5px;
+  &:hover{
+    background-color: $hover_main;
+  }
 }
 
 // outlined button style
@@ -28,7 +31,10 @@ button {
   border-radius: 50px;
   border: 1px solid $main_color;
   border-radius: 3px;
-
+  &:hover{
+    background-color: $main_color !important;
+    color: #fff !important;
+    }
 }
 
 // ================================= form ============================

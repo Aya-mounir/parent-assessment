@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/core/services/features/auth.service';
   providers: [MessageService],
 })
 export class LoginComponent {
-  // Initialization
+  // =========================== Initialization ========================
   loginForm!: FormGroup;
   loading: boolean = false;
 
@@ -30,6 +30,9 @@ export class LoginComponent {
       password: ['', [Validators.required]],
     });
   }
+
+
+  // ================ Functions ===================
 
   // submit function to login
   onSubmit() {

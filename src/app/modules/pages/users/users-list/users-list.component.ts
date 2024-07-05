@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { UsersService } from 'src/app/core/services/features/users.service';
 
@@ -9,12 +9,16 @@ import { UsersService } from 'src/app/core/services/features/users.service';
   providers: [MessageService],
 })
 export class UsersListComponent {
-  //Initializations
-  users: any;
+  // ======================== decoratores ============================
+  @Output() userId = new EventEmitter<any>();
+  @Input() selectedUserId:any;
+  // ======================= Initializations =============================
+  users: any []= [];
   currentPage: number = 1;
   perPage: number = 5;
   totalUsers: number = 0;
   loadMore: boolean = false;
+
   constructor(
     private usersService: UsersService,
     private _MessageService: MessageService
@@ -26,6 +30,9 @@ export class UsersListComponent {
     this.getAllUsers(1, 5);
   }
 
+  // ================ Functions ===================
+
+  // get All Users
   getAllUsers(page: number, perPage: number) {
     this.loadMore = true;
     let params = '?page=' + page + '&per_page=' + perPage;
@@ -34,6 +41,7 @@ export class UsersListComponent {
         this.loadMore = false;
         this.users = res.data;
         this.totalUsers = res.total;
+
       },
       (err) => {
         this.loadMore = false;
@@ -44,5 +52,19 @@ export class UsersListComponent {
         });
       }
     );
+  }
+
+  // add new
+  getuserDetails(id: any) {
+    this.selectedUserId = id;
+    this.userId.emit(this.selectedUserId);
+  }
+  // delete
+  deleteUser(id: any) {
+    console.log('delete');
+  }
+  // update
+  updateUser(id: any) {
+    console.log('update');
   }
 }
