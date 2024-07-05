@@ -1,0 +1,92 @@
+<div class="users_dialog w-100">
+  <!-- Toast -->
+  <p-toast></p-toast>
+  <!-- Toast End-->
+  <p-dialog
+    class="d-flex flex-column align-items-center"
+    [(visible)]="visible"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <!-- Avatar -->
+    <div class="avatar">
+      <i class="fa-solid fa-user"></i>
+    </div>
+    <!-- Avatar End -->
+    <!-- Form -->
+    <form [formGroup]="userForm" class="w-100">
+      <!-- name -->
+      <div class="form_item">
+        <label for="name">Name</label>
+        <input type="text" placeholder="Name" formControlName="name" />
+        <!-- Validations -->
+        <ng-container
+          *ngIf="
+            userForm.controls['name'].invalid &&
+            userForm.controls['name'].touched
+          "
+        >
+          <div
+            *ngIf="userForm.controls['name'].errors?.['required']"
+            class="p-error"
+          >
+            Required Field
+          </div>
+          <div
+            *ngIf="userForm.controls['name'].errors?.['custom']"
+            class="p-error"
+          >
+            {{userForm.controls['name'].errors?.['custom'] }}
+          </div>
+        </ng-container>
+        <!-- Validations End -->
+      </div>
+
+      <!-- Name End -->
+      <!-- job -->
+      <div class="form_item">
+        <label for="job">Job</label>
+        <input
+          type="text"
+          placeholder="job title.."
+          Title
+          formControlName="job"
+        />
+        <!-- Validations -->
+        <ng-container
+          *ngIf="
+            userForm.controls['job'].invalid && userForm.controls['job'].touched
+          "
+        >
+          <div
+            *ngIf="userForm.controls['job'].errors?.['required']"
+            class="p-error"
+          >
+            Required Field
+          </div>
+          <div
+            *ngIf="userForm.controls['job'].errors?.['custom']"
+            class="p-error"
+          >
+            {{userForm.controls['job'].errors?.['custom'] }}
+          </div>
+        </ng-container>
+        <!-- Validations End -->
+      </div>
+      <!-- job End -->
+      <!-- Action Buttons -->
+      <div class="btns w-100 d-flex justify-content-between">
+        <button class="cancel outlined" (click)="cancel()">cancel</button>
+        <button class="action filled text-center" (click)="onSubmit()">
+          {{ userId == -1 ? "Add" : "Save" }}
+          <div *ngIf="loading" class="spinner-border spinner-border-sm">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </button>
+      </div>
+      <!-- Action Buttons End-->
+    </form>
+    <!-- Form End -->
+  </p-dialog>
+</div>
