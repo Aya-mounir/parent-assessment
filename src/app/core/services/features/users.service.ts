@@ -17,17 +17,17 @@ export class UsersService extends BaseService {
 
   // get single user
   getUser(id: any) {
-    return this.get(ApiUrls.users + '/' + id);
+    return this.get(`${ApiUrls.users}/${id}`);
   }
 
   // Add user
   addUser(id: any, body: any) {
-    return this.post(ApiUrls.users + '/' + id, body);
+    return this.post(`${ApiUrls.users}/${id}`, body);
   }
 
   // Update  user
   updateUser(id: any, body: any) {
-    return this.put(ApiUrls.users + '/' + id, body);
+    return this.put(`${ApiUrls.users}/${id}`, body);
   }
 
   // Delete user

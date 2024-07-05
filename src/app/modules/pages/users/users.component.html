@@ -15,22 +15,22 @@
       <!-- Page Details End -->
     </div>
   </div>
-  <div class="container users_list d-flex p-3">
+  <div class="container users_list d-flex p-0 flex-wrap">
     <!-- users List -->
     <app-users-list
       (userId)="getUserId($event)"
       class="list"
       [selectedUserId]="userId"
-      [ngClass]="userId == -1 ? 'w-100' : 'w-75'"
+      [ngClass]="userId == -1 ? 'w-100' : 'part'"
     ></app-users-list>
     <!-- users List End -->
 
     <!-- user details -->
     <app-user-details
+      *ngIf="userId != -1"
       class="details"
       (closeDetails)="closeDetails()"
       [userId]="userId"
-      [ngClass]="userId == -1 ? 'd-none' : 'w-25 '"
     ></app-user-details>
     <!-- user details End -->
   </div>

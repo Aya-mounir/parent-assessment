@@ -11,9 +11,9 @@ import { UsersService } from 'src/app/core/services/features/users.service';
 export class UsersListComponent {
   // ======================== decoratores ============================
   @Output() userId = new EventEmitter<any>();
-  @Input() selectedUserId:any;
+  @Input() selectedUserId: any;
   // ======================= Initializations =============================
-  users: any []= [];
+  users: any[] = [];
   currentPage: number = 1;
   perPage: number = 5;
   totalUsers: number = 0;
@@ -41,14 +41,13 @@ export class UsersListComponent {
         this.loadMore = false;
         this.users = res.data;
         this.totalUsers = res.total;
-
       },
       (err) => {
         this.loadMore = false;
         this._MessageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: `Something went wrong!`,
+          detail: err.error.error ? err.error.error : `Something went wrong!`,
         });
       }
     );

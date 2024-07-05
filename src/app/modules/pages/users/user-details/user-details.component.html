@@ -1,6 +1,29 @@
 <div class="users_details_page w-100">
   <!-- Toast -->
-  <!-- <p-toast></p-toast> -->
+  <p-toast></p-toast>
   <!-- Toast End-->
-  <i class="pi pi-times" (click)="closeDetailsSection()" ></i>
+  <!-- Close Details -->
+  <div
+    class="close_details w-100 d-flex align-items-center justify-content-end p-3"
+  >
+    <i class="pi pi-times" (click)="closeDetailsSection()"></i>
+  </div>
+  <!-- Close Details End -->
+
+  <!-- avatar and name -->
+  <div class="user w-100 d-flex flex-column align-items-center justify-content-center">
+    <img [src]="user.avatar" alt="" />
+    <p class="mt-4">{{ user.first_name }} {{ user.last_name }}</p>
+  </div>
+  <!-- avatar and name End -->
+   <div class="actions container py-4 w-100 d-flex align-items-center justify-content-between">
+    <button class="filled">
+      <i class="fa-solid fa-pen"></i>
+      <span>Edit</span>
+    </button>
+    <button class="outlined">
+      <i class="fa-solid fa-trash"></i>
+      <span>Delete</span>
+    </button>
+   </div>
 </div>
