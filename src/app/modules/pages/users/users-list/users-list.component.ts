@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { UsersService } from 'src/app/core/services/features/users.service';
+import { loadUser } from 'src/app/core/store/actions';
 
 @Component({
   selector: 'app-users-list',
@@ -9,9 +11,6 @@ import { UsersService } from 'src/app/core/services/features/users.service';
   providers: [MessageService],
 })
 export class UsersListComponent {
-  // ======================== decoratores ============================
-  @Output() userId = new EventEmitter<any>();
-  @Input() selectedUser: any;
   // ======================= Initializations =============================
   users: any[] = [];
   currentPage: number = 1;
@@ -21,11 +20,17 @@ export class UsersListComponent {
   updateVisible: boolean = false;
   userUpdate: any = { id: -1 };
   isDeleteUser: boolean = false;
+  selectUser: any;
 
   constructor(
     private usersService: UsersService,
-    private _MessageService: MessageService
-  ) {}
+    private _MessageService: MessageService,
+    private store: Store
+  ) {
+    store.subscribe((res: any) => {
+      this.selectUser = res.user.user;
+    });
+  }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -49,7 +54,7 @@ export class UsersListComponent {
         this._MessageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: err.error? err.error.error : `Something went wrong!`,
+          detail: err.error ? err.error.error : `Something went wrong!`,
         });
       }
     );
@@ -57,21 +62,24 @@ export class UsersListComponent {
 
   // add new
   getuserDetails(user: any) {
-    this.selectedUser = user;
-    this.userId.emit(this.selectedUser);
+    this.store.dispatch(loadUser({ user: user }));
+    this.selectUser = user;
   }
 
   // delete
   deleteUser(user: any) {
-    this.userUpdate = user;
+    this.store.dispatch(loadUser({ user: user }));
     this.updateVisible = true;
     this.isDeleteUser = true;
+    this.selectUser = user;
   }
 
   // update
   updateUser(user: any) {
-    this.userUpdate = user;
+    this.store.dispatch(loadUser({ user: user }));
     this.updateVisible = true;
+    this.isDeleteUser = false;
+    this.selectUser = user;
   }
 
   // close Update

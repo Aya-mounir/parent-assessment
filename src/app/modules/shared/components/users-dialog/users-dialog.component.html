@@ -11,18 +11,18 @@
     <!-- Add and Update Form -->
     <div
       class="add_update w-100 h-100 d-flex flex-column align-items-center"
-      *ngIf="!isDelete"
+      *ngIf="isAdd || isUpdate"
     >
       <!-- Avatar -->
       <div class="avatar">
-        <i class="fa-solid fa-user" *ngIf="user.id == -1"></i>
-        <img [src]="user.avatar" alt="" *ngIf="user.id != -1" />
+        <i class="fa-solid fa-user" *ngIf="isAdd"></i>
+        <img [src]="user.avatar" alt="" *ngIf="isUpdate" />
       </div>
       <!-- Avatar End -->
       <!-- Form -->
       <form [formGroup]="userForm" class="w-100">
         <!-- name -->
-        <div class="form_item">
+        <div class="form_item mb-3">
           <label for="name">Name</label>
           <input type="text" placeholder="Name" formControlName="name" />
           <!-- Validations -->
@@ -50,7 +50,7 @@
 
         <!-- Name End -->
         <!-- job -->
-        <div class="form_item">
+        <div class="form_item mb-3">
           <label for="job">Job</label>
           <input
             type="text"
@@ -85,7 +85,7 @@
         <div class="btns w-100 d-flex justify-content-between">
           <button class="cancel outlined" (click)="cancel()">cancel</button>
           <button class="action filled text-center" (click)="onSubmit()">
-            {{ user.id == -1 ? "Add" : "Save" }}
+            {{ isAdd ? "Add" : "Save" }}
             <div *ngIf="loading" class="spinner-border spinner-border-sm">
               <span class="visually-hidden">Loading...</span>
             </div>

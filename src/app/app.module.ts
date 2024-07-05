@@ -10,6 +10,10 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 
+// ngrx
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from './core/store/reducer';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -22,6 +26,7 @@ import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
     AppRoutingModule,
     HttpClientModule, // the change from http module
     BrowserAnimationsModule,
+    StoreModule.forRoot({ user: userReducer }),
 
   ],
   providers: [

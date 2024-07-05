@@ -1,6 +1,11 @@
 import { MessageService } from 'primeng/api';
 import { UsersService } from './../../../../core/services/features/users.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/core/store/user.model';
+import { Store } from '@ngrx/store';
+import { resetUser, updateUser } from 'src/app/core/store/actions';
+import { selectUser } from 'src/app/core/store/selectors';
 
 @Component({
   selector: 'app-user-details',
@@ -9,16 +14,23 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   providers: [MessageService],
 })
 export class UserDetailsComponent {
-  // ======================== decoratores ============================
-  @Input() user: any;
-  @Output() closeDetails = new EventEmitter<any>();
   // ======================== Initializations ============================
   updateVisible: boolean = false;
   isDeleteUser: boolean = false;
+  user: any;
+
+  constructor(private store: Store) {
+    this.store.subscribe((res:any)=>{
+      this.user = res.user.user;
+    })
+  }
+
   // ================ Functions ===================
   // close Details
   closeDetailsSection() {
-    this.closeDetails.emit(-1);
+    this.store.dispatch(resetUser());
+
+
   }
 
   // Delete user

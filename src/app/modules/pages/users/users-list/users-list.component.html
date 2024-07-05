@@ -18,7 +18,7 @@
   <div class="content user w-100 py-2" *ngFor="let user of users">
     <div
       class="row w-100 m-0 py-2 d-flex align-items-center"
-      [ngClass]="selectedUser.id == user.id ? 'focused' : ''"
+      [ngClass]="selectUser.id == user.id ? 'focused' : ''"
     >
       <!-- user avatar and Name -->
       <div
@@ -31,7 +31,12 @@
       <!-- user avatar and Name End -->
       <!-- Actions -->
       <div
-        class="actions col-md-2 col-3 d-flex align-items-center justify-content-between"
+        class="actions col-md-2 col-3 d-flex align-items-center"
+        [ngClass]="
+          selectUser.id == user.id
+            ? 'justify-content-end'
+            : 'justify-content-between'
+        "
       >
         <div class="d-flex update_delete">
           <i class="edit outlined fa-solid fa-pen" (click)="updateUser(user)">
@@ -83,7 +88,8 @@
 <app-users-dialog
   [visible]="updateVisible"
   (close)="closeUpdate()"
-  [user]="userUpdate"
   [isDelete]="isDeleteUser"
+  [isUpdate]="!isDeleteUser"
+  [isAdd]="false"
 ></app-users-dialog>
 <!-- Update User End -->

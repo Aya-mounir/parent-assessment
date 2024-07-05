@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { loadUser } from 'src/app/core/store/actions';
+import { selectUser } from 'src/app/core/store/selectors';
+import { User } from 'src/app/core/store/user.model';
 
 @Component({
   selector: 'app-users',
@@ -7,19 +12,17 @@ import { Component } from '@angular/core';
 })
 export class UsersComponent {
   // ====================== Initializations ==================
-  user: any = {id:-1};
   addNewVisible: boolean = false;
+  user: any;
+
+  constructor(private store: Store) {
+    this.store.subscribe((res: any) => {
+      this.user = res.user.user;
+    });
+  }
 
   // ================ Functions ===================
-  // get id from child list
-  getUserId(event: any) {
-    this.user = event;
-  }
 
-  // close details
-  closeDetails() {
-    this.user = {id:-1};
-  }
   closeAddNew() {
     this.addNewVisible = false;
   }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
 import { UsersService } from 'src/app/core/services/features/users.service';
 
@@ -12,19 +13,26 @@ import { UsersService } from 'src/app/core/services/features/users.service';
 export class UsersDialogComponent {
   //  ========================= decorator ====================
   @Input() visible: boolean = false;
-  @Input() user: any = { id: -1 };
   @Input() isDelete: boolean = false;
+  @Input() isUpdate: boolean = false;
+  @Input() isAdd: boolean = false;
   @Output() close = new EventEmitter<boolean>();
 
   // ========================== Initialization ==================
   userForm: FormGroup;
   loading: boolean = false;
+  user: any;
 
   constructor(
     private _UsersService: UsersService,
     private _MessageService: MessageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private store: Store
   ) {
+    // get user value
+    this.store.subscribe((res: any) => {
+      this.user = res.user.user;
+    });
     // create reactive form
     this.userForm = this.formBuilder.group({
       name: ['', [Validators.required]],

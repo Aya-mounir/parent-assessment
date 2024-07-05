@@ -36,8 +36,9 @@
 <app-users-dialog
   [visible]="updateVisible"
   (close)="closeUpdate()"
-  [user]="user"
   [isDelete]="isDeleteUser"
+  [isUpdate]="!isDeleteUser"
+  [isAdd]="false"
 
 ></app-users-dialog>
 <!-- Update User End -->
