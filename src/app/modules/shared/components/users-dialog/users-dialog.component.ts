@@ -12,11 +12,11 @@ import { UsersService } from 'src/app/core/services/features/users.service';
 export class UsersDialogComponent {
   //  ========================= decorator ====================
   @Input() visible: boolean = false;
-  @Input() userId: any = -1;
+  @Input() user: any = { id: -1 };
+  @Input() isDelete: boolean = false;
   @Output() close = new EventEmitter<boolean>();
 
   // ========================== Initialization ==================
-  user: any;
   userForm: FormGroup;
   loading: boolean = false;
 
@@ -35,27 +35,14 @@ export class UsersDialogComponent {
   ngOnChanges(): void {
     // check if id found then update
     // so i get user by id to update on his data
-    if (this.userId != -1) {
-      this._UsersService.getAllUsers('/' + this.userId).subscribe(
-        (res: any) => {
-          console.log(res.data);
-          this.userForm.value.name = res.data.first_name;
-          this.userForm = this.formBuilder.group({
-            name: [
-              res.data.first_name + ' ' + res.data.last_name,
-              [Validators.required],
-            ],
-            job: ['', [Validators.required]],
-          });
-        },
-        (err) => {
-          this._MessageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: err.error.error ? err.error.error : `Something went wrong!`,
-          });
-        }
-      );
+    if (this.user.id != -1) {
+      this.userForm = this.formBuilder.group({
+        name: [
+          this.user.first_name + ' ' + this.user.last_name,
+          [Validators.required],
+        ],
+        job: ['', [Validators.required]],
+      });
     } else {
       this.userForm = this.formBuilder.group({
         name: ['', [Validators.required]],
@@ -70,14 +57,16 @@ export class UsersDialogComponent {
   }
 
   onSubmit() {
+    // Add loader
+    this.loading = true;
+
     if (this.userForm.valid) {
       // if form Valid
       const payload = {
         name: this.userForm.value.name,
         job: this.userForm.value.job,
       };
-      if (this.userId == -1) {
-        this.loading = true;
+      if (this.user.id == -1) {
         // Add New User
         this._UsersService.addUser(payload).subscribe(
           (res: any) => {
@@ -87,11 +76,15 @@ export class UsersDialogComponent {
               detail: `User Created Successfuly!`,
             });
             // close dialog after success
-            () => this.close.emit(false);
+            this.close.emit(false);
             //  reset Form
             this.resetForm();
+            //  stop loader
+            this.loading = false;
           },
           (err) => {
+            //  stop loader
+            this.loading = false;
             this._MessageService.add({
               severity: 'error',
               summary: 'Error',
@@ -103,7 +96,7 @@ export class UsersDialogComponent {
         );
       } else {
         // Update User
-        this._UsersService.updateUser(this.userId, payload).subscribe(
+        this._UsersService.updateUser(this.user.id, payload).subscribe(
           (res: any) => {
             this._MessageService.add({
               severity: 'success',
@@ -113,10 +106,12 @@ export class UsersDialogComponent {
 
             // close dialog after success
             this.close.emit(false);
-            //  reset Form
-            this.resetForm();
+            //  stop loader
+            this.loading = false;
           },
           (err) => {
+            //  stop loader
+            this.loading = false;
             this._MessageService.add({
               severity: 'error',
               summary: 'Error',
@@ -139,11 +134,40 @@ export class UsersDialogComponent {
 
   // reset Form
   resetForm() {
-    this.loading = false;
-    this.userId = -1;
+    this.user = { id: -1 };
     this.userForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       job: ['', [Validators.required]],
     });
+  }
+
+  // delete user
+  deleteUser() {
+    this.loading = true;
+    // Add New User
+    this._UsersService.deleteUser(this.user.id).subscribe(
+      (res: any) => {
+        // close dialog after success
+        this.close.emit(false);
+        //  stop loader
+        this.loading = false;
+        this._MessageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: `User Deleted Successfuly!`,
+        });
+      },
+      (err) => {
+        // close dialog after success
+        this.close.emit(false);
+        //  stop loader
+        this.loading = false;
+        this._MessageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: `User Deleted Successfuly!`,
+        });
+      }
+    );
   }
 }
