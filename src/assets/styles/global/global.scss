@@ -7,12 +7,7 @@ p {
 body {
   margin: unset;
 }
-// =========================== buttons ====================================
-button {
-  border: none;
-  padding: 0.5rem 2rem;
-  font-size: 1rem;
-}
+
 // filled button and nav item style
 .filled {
   background-color: $main_color;
@@ -36,13 +31,21 @@ button {
     color: #fff !important;
     }
 }
+// =========================== buttons ====================================
+button {
+  border: none;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  border-radius: 50px;
+
+}
 
 // ================================= form ============================
 .form_item {
   width: 100%;
   border-radius: 8px;
   color: $gray;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem !important;
   label {
     display: block;
     color: $gray;
@@ -53,7 +56,7 @@ button {
     width: 100%;
     border: 1px solid $input_border;
     border-radius: 6px;
-    color: $gray;
+    color: $dark_gray;
     padding: 8px;
     font-size: 1rem;
     &::placeholder {
@@ -69,4 +72,8 @@ button {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.p-error{
+  font-size: 0.8rem;
 }

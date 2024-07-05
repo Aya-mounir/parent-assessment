@@ -7,7 +7,10 @@
         class="page_details d-flex align-items-center justify-content-between mt-3"
       >
         <h2>Users List</h2>
-        <button class="filled px-2 d-flex align-items-center mx-1">
+        <button
+          class="filled px-2 d-flex align-items-center mx-1"
+          (click)="addNewVisible = true"
+        >
           <i class="pi pi-plus mx-1"></i>
           New User
         </button>
@@ -20,18 +23,28 @@
     <app-users-list
       (userId)="getUserId($event)"
       class="list"
-      [selectedUserId]="userId"
-      [ngClass]="userId == -1 ? 'w-100' : 'part'"
+      [selectedUser]="user"
+      [ngClass]="user.id == -1 ? 'w-100' : 'part'"
     ></app-users-list>
     <!-- users List End -->
 
     <!-- user details -->
     <app-user-details
-      *ngIf="userId != -1"
+      *ngIf="user.id != -1"
       class="details"
       (closeDetails)="closeDetails()"
-      [userId]="userId"
+      [user]="user"
     ></app-user-details>
     <!-- user details End -->
   </div>
 </div>
+
+<!-- Add User -->
+<app-users-dialog
+*ngIf="addNewVisible"
+  [visible]="addNewVisible"
+  (close)="closeAddNew()"
+  [user]="{id:-1}"
+  [isDelete]="false"
+></app-users-dialog>
+<!-- Add User End -->

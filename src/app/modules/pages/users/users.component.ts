@@ -7,16 +7,20 @@ import { Component } from '@angular/core';
 })
 export class UsersComponent {
   // ====================== Initializations ==================
-  userId: any = -1;
+  user: any = {id:-1};
+  addNewVisible: boolean = false;
 
   // ================ Functions ===================
   // get id from child list
   getUserId(event: any) {
-    this.userId = event;
+    this.user = event;
   }
 
   // close details
   closeDetails() {
-    this.userId = -1;
+    this.user = {id:-1};
+  }
+  closeAddNew() {
+    this.addNewVisible = false;
   }
 }

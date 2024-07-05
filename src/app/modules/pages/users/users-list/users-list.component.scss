@@ -1,7 +1,7 @@
 @import "../../../../../assets/styles/variables/variables";
 .users_list_page {
   min-height: fit-content;
-  height: calc(100vh - 269px);
+  height: calc(100vh - 245px);
   overflow: auto;
   .header {
     .user,
@@ -32,7 +32,9 @@
         }
       }
       .actions{
-        display: none !important;
+        .update_delete{
+          display: none !important;
+        }
       }
       background-color: $main_color;
       .fa-chevron-right{
@@ -60,6 +62,7 @@
     }
     .fa-chevron-right {
       color: $main_color;
+      background-color: transparent !important;
     }
   }
   div.content:last-of-type {

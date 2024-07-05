@@ -21,8 +21,8 @@ export class UsersService extends BaseService {
   }
 
   // Add user
-  addUser(id: any, body: any) {
-    return this.post(`${ApiUrls.users}/${id}`, body);
+  addUser(body: any) {
+    return this.post(`${ApiUrls.users}`, body);
   }
 
   // Update  user
@@ -32,6 +32,7 @@ export class UsersService extends BaseService {
 
   // Delete user
   deleteUser(id: any) {
-    return this.delete(ApiUrls.users + '/' + id);
+
+    return this.delete(`${ApiUrls.users}/${id}`);
   }
 }

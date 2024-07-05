@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { UsersComponent } from './users/users.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
 import { UserDetailsComponent } from './users/user-details/user-details.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [UsersComponent, UsersListComponent, UserDetailsComponent],
@@ -20,6 +21,7 @@ import { UserDetailsComponent } from './users/user-details/user-details.componen
     PasswordModule,
     InputTextModule,
     ToastModule,
+    SharedModule
   ],
 })
 export class PagesModule {}

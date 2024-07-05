@@ -11,13 +11,16 @@ import { UsersService } from 'src/app/core/services/features/users.service';
 export class UsersListComponent {
   // ======================== decoratores ============================
   @Output() userId = new EventEmitter<any>();
-  @Input() selectedUserId: any;
+  @Input() selectedUser: any;
   // ======================= Initializations =============================
   users: any[] = [];
   currentPage: number = 1;
   perPage: number = 5;
   totalUsers: number = 0;
   loadMore: boolean = false;
+  updateVisible: boolean = false;
+  userUpdate: any = { id: -1 };
+  isDeleteUser: boolean = false;
 
   constructor(
     private usersService: UsersService,
@@ -31,7 +34,6 @@ export class UsersListComponent {
   }
 
   // ================ Functions ===================
-
   // get All Users
   getAllUsers(page: number, perPage: number) {
     this.loadMore = true;
@@ -47,23 +49,33 @@ export class UsersListComponent {
         this._MessageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: err.error.error ? err.error.error : `Something went wrong!`,
+          detail: err.error? err.error.error : `Something went wrong!`,
         });
       }
     );
   }
 
   // add new
-  getuserDetails(id: any) {
-    this.selectedUserId = id;
-    this.userId.emit(this.selectedUserId);
+  getuserDetails(user: any) {
+    this.selectedUser = user;
+    this.userId.emit(this.selectedUser);
   }
+
   // delete
-  deleteUser(id: any) {
-    console.log('delete');
+  deleteUser(user: any) {
+    this.userUpdate = user;
+    this.updateVisible = true;
+    this.isDeleteUser = true;
   }
+
   // update
-  updateUser(id: any) {
-    console.log('update');
+  updateUser(user: any) {
+    this.userUpdate = user;
+    this.updateVisible = true;
+  }
+
+  // close Update
+  closeUpdate() {
+    this.updateVisible = false;
   }
 }

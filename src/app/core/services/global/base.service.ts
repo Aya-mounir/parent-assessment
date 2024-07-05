@@ -41,7 +41,7 @@ export class BaseService {
   protected delete<T>(url: string, data?: any): Observable<T> {
     return this.http
       .delete<IHttpResponse<T>>(
-        `${this.baseUrl}/${url}/${data}`
+        `${this.baseUrl}/${url}`
       )
       .pipe(map((res) => res.content));
   }
