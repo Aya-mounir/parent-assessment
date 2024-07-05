@@ -1,0 +1,45 @@
+@import "../../../../../assets/styles/variables/variables";
+.users_list_page {
+  height: fit-content;
+  max-height: calc(100vh - 350px);
+  .header {
+    .user,
+    .actions {
+      color: $gray;
+    }
+  }
+  .content {
+    border-bottom: 1px solid $input_border;
+    cursor: pointer;
+    .row {
+      padding: 0.4rem;
+      border-radius: 6px;
+      &:hover {
+        background-color: $hover_main;
+      }
+    }
+
+    .user {
+      img {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+      }
+      .name {
+        text-transform: capitalize;
+      }
+    }
+    .actions {
+      i {
+        padding: 0.3rem;
+        background-color: #fff;
+      }
+    }
+    .fa-chevron-right {
+      color: $main_color;
+    }
+  }
+  .content:last-child{
+    border: none ;
+  }
+}

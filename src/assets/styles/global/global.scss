@@ -22,7 +22,13 @@ button {
 }
 
 // outlined button style
-.outline_button {
+.outlined {
+  background-color: #fff;
+  color:$main_color;
+  border-radius: 50px;
+  border: 1px solid $main_color;
+  border-radius: 3px;
+
 }
 
 // ================================= form ============================
