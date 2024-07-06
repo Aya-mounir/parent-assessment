@@ -26,15 +26,16 @@ export class UsersListComponent {
     private _MessageService: MessageService,
     private store: Store
   ) {
-    store.subscribe((res: any) => {
-      this.selectedUser = res.user.user;
-    });
   }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.getAllUsers(1, 5);
+    this.store.subscribe((res: any) => {
+      this.selectedUser = res.user.user;
+    });
+
   }
 
   // ================ Functions ===================

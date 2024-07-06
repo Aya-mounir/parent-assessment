@@ -1,13 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PagesLayoutComponent } from './pages-layout.component';
-
+import { NavBarComponent } from '../../components/nav-bar/nav-bar.component';
+import { RouterTestingModule } from '@angular/router/testing';
 describe('PagesLayoutComponent', () => {
   let component: PagesLayoutComponent;
   let fixture: ComponentFixture<PagesLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PagesLayoutComponent],
+      declarations: [PagesLayoutComponent,NavBarComponent],
+      imports: [RouterTestingModule], // Import RouterTestingModule here
+
     }).compileComponents();
   });
 

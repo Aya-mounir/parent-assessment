@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +6,9 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  dynamicTitle: string = 'Spaces';
+
   constructor(
-    private titleService: Title,
 
   ) {
-    this.titleService.setTitle(this.dynamicTitle);
   }
 }
