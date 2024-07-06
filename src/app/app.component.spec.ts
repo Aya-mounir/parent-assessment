@@ -1,28 +1,39 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { Title } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-
+import { RouterOutlet } from '@angular/router';
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent]
-  }));
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let titleService: Title;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      providers: [Title],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    titleService = TestBed.inject(Title);
+  });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'parent-assessment'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-  });
+  it('should set the title to "Spaces"', () => {
+    spyOn(titleService, 'setTitle');
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('parent-assessment app is running!');
+
+    expect(titleService.setTitle).toHaveBeenCalledWith('Spaces');
   });
+
+  it('should have a dynamicTitle property initialized with "Spaces"', () => {
+    expect(component.dynamicTitle).toEqual('Spaces');
+  });
+
+  // Add more tests as needed for AppComponent functionality
 });
+

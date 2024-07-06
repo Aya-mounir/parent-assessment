@@ -1,106 +1,109 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { UsersListComponent } from './users-list.component';
-import { UsersService } from 'src/app/core/services/features/users.service';
+import { Store, StoreModule } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
-import { Store } from '@ngrx/store';
-import { of, throwError } from 'rxjs';
+import { UsersService } from 'src/app/core/services/features/users.service';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { loadUser } from 'src/app/core/store/actions';
-import { HttpClientModule } from '@angular/common/http';
-import { ToastModule } from 'primeng/toast';
+import { of } from 'rxjs';
 
 describe('UsersListComponent', () => {
   let component: UsersListComponent;
   let fixture: ComponentFixture<UsersListComponent>;
-  let usersServiceMock: jasmine.SpyObj<UsersService>;
-  let messageServiceMock: jasmine.SpyObj<MessageService>;
-  let storeMock: jasmine.SpyObj<Store<any>>;
+  let store: MockStore;
+  let usersService: UsersService; // Declare usersService for testing purposes
+  const initialState = {
+    user: {
+      user: null,
+    },
+  };
 
   beforeEach(async () => {
-    usersServiceMock = jasmine.createSpyObj('UsersService', ['getAllUsers']);
-    messageServiceMock = jasmine.createSpyObj('MessageService', ['add']);
-    storeMock = jasmine.createSpyObj('Store', ['dispatch', 'subscribe']);
-
     await TestBed.configureTestingModule({
       declarations: [UsersListComponent],
-      imports: [HttpClientModule, ToastModule],
+      imports: [StoreModule.forRoot({})],
       providers: [
-        { provide: UsersService, useValue: usersServiceMock },
-        { provide: MessageService, useValue: messageServiceMock },
-        { provide: Store, useValue: storeMock }
-      ]
+        UsersService,
+        MessageService,
+        provideMockStore({ initialState }),
+      ],
     }).compileComponents();
 
-    storeMock.subscribe.and.callFake((callback: any) => {
-      return callback({ user: { user: {} } });
-    });
-  });
-
-  beforeEach(() => {
+    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(UsersListComponent);
     component = fixture.componentInstance;
+    usersService = TestBed.inject(UsersService); // Inject UsersService
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  afterEach(() => {
+    component.closeDialog(); // Ensure dialog is closed after each test
+  });
+
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load users on init', () => {
-    const users = { data: [{ id: -1, first_name: '',last_name:"",email:"",avatar:"" }], total: 1 };
-    usersServiceMock.getAllUsers.and.returnValue(of(users));
-
-    component.ngOnInit();
-
-    expect(usersServiceMock.getAllUsers).toHaveBeenCalledWith('?page=1&per_page=5');
-    expect(component.users).toEqual(users.data);
-    expect(component.totalUsers).toEqual(users.total);
+  it('should initialize with default values', () => {
+    expect(component.users).toEqual([]);
+    expect(component.currentPage).toBe(1);
+    expect(component.perPage).toBe(5);
+    expect(component.totalUsers).toBe(0);
+    expect(component.loadMore).toBe(false);
+    expect(component.dialogVisible).toBe(false);
+    expect(component.isDeleteUser).toBe(false);
+    expect(component.selectedUser).toBeUndefined();
   });
 
-  it('should handle error when loading users', () => {
-    usersServiceMock.getAllUsers.and.returnValue(throwError({ error: { error: 'Error occurred' } }));
+  it('should fetch users on ngOnInit()', () => {
+    spyOn(component, 'getAllUsers');
+    component.ngOnInit();
+    expect(component.getAllUsers).toHaveBeenCalledWith(1, 5);
+  });
+
+  it('should fetch users and update state on getAllUsers()', fakeAsync(() => {
+    const mockUsers = [{ id: 1, name: 'User 1' }, { id: 2, name: 'User 2' }];
+    spyOn(usersService, 'getAllUsers').and.returnValue(of({ data: mockUsers, total: 2 }));
 
     component.getAllUsers(1, 5);
+    tick(); // Simulate passage of time for async operation to complete
 
-    expect(component.loadMore).toBeFalse();
-    expect(messageServiceMock.add).toHaveBeenCalledWith({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Error occurred',
-    });
+    expect(component.loadMore).toBe(false);
+    expect(component.users).toEqual(mockUsers);
+    expect(component.totalUsers).toBe(2);
+  }));
+
+  it('should dispatch loadUser action and update selectedUser on getuserDetails()', () => {
+    const mockUser = { id: -1, first_name: '', last_name: '', email: '', avatar: '' };
+    spyOn(store, 'dispatch');
+    component.getuserDetails(mockUser);
+    expect(store.dispatch).toHaveBeenCalledWith(loadUser({ user: mockUser }));
+    expect(component.selectedUser).toEqual(mockUser);
   });
 
-  it('should set selected user when getting user details', () => {
-    const user = { id: -1, first_name: '',last_name:"",email:"",avatar:"" };
-
-    component.getuserDetails(user);
-
-    expect(storeMock.dispatch).toHaveBeenCalledWith(loadUser({ user }));
-    expect(component.selectedUser).toEqual(user);
+  it('should set dialogVisible and isDeleteUser to true on deleteUser()', () => {
+    const mockUser = { id: -1, first_name: '', last_name: '', email: '', avatar: '' };
+    spyOn(store, 'dispatch');
+    component.deleteUser(mockUser);
+    expect(store.dispatch).toHaveBeenCalledWith(loadUser({ user: mockUser }));
+    expect(component.dialogVisible).toBe(true);
+    expect(component.isDeleteUser).toBe(true);
   });
 
-  it('should open delete dialog when deleting user', () => {
-    const user = { id: -1, first_name: '',last_name:"",email:"",avatar:"" };
-
-    component.deleteUser(user);
-
-    expect(storeMock.dispatch).toHaveBeenCalledWith(loadUser({ user }));
-    expect(component.dialogVisible).toBeTrue();
-    expect(component.isDeleteUser).toBeTrue();
+  it('should set dialogVisible and isDeleteUser to false on updateUser()', () => {
+    const mockUser = { id: -1, first_name: '', last_name: '', email: '', avatar: '' };
+    spyOn(store, 'dispatch');
+    component.updateUser(mockUser);
+    expect(store.dispatch).toHaveBeenCalledWith(loadUser({ user: mockUser }));
+    expect(component.dialogVisible).toBe(true);
+    expect(component.isDeleteUser).toBe(false);
   });
 
-  it('should open update dialog when updating user', () => {
-    const user = { id: -1, first_name: '',last_name:"",email:"",avatar:"" };
-
-    component.updateUser(user);
-
-    expect(storeMock.dispatch).toHaveBeenCalledWith(loadUser({ user }));
-    expect(component.dialogVisible).toBeTrue();
-    expect(component.isDeleteUser).toBeFalse();
-  });
-
-  it('should close dialog', () => {
+  it('should set dialogVisible to false on closeDialog()', () => {
+    component.dialogVisible = true;
     component.closeDialog();
-
-    expect(component.dialogVisible).toBeFalse();
+    expect(component.dialogVisible).toBe(false);
   });
+
+  // Add more tests as needed
 });

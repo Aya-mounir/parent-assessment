@@ -25,7 +25,6 @@ import { ToastModule } from 'primeng/toast';
   ],
   exports: [
     UsersDialogComponent,
-    NavBarComponent
   ]
 })
 export class SharedModule { }
