@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
+  providers: [MessageService]
 })
 export class UsersComponent {
   // ====================== Initializations ==================

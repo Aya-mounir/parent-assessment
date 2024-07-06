@@ -73,19 +73,18 @@ export class UsersDialogComponent {
         name: this.userForm.value.name,
         job: this.userForm.value.job,
       };
-      if (this.user.id == -1) {
-        // Add New User
-        this._UsersService.addUser(body).subscribe(
+      if (this.isUpdate) {
+        // Update User
+        this._UsersService.updateUser(this.user.id, body).subscribe(
           (res: any) => {
             this._MessageService.add({
               severity: 'success',
               summary: 'Success',
-              detail: `User Created Successfuly!`,
+              detail: `User Updated Successfuly!`,
             });
+
             // close dialog after success
             this.close.emit(false);
-            //  reset Form
-            this.resetForm();
             //  stop loader
             this.loading = false;
           },
@@ -102,15 +101,14 @@ export class UsersDialogComponent {
           }
         );
       } else {
-        // Update User
+        // Add User
         this._UsersService.updateUser(this.user.id, body).subscribe(
           (res: any) => {
             this._MessageService.add({
               severity: 'success',
               summary: 'Success',
-              detail: `User Updated Successfuly!`,
+              detail: `User Added Successfuly!`,
             });
-
             // close dialog after success
             this.close.emit(false);
             //  stop loader
