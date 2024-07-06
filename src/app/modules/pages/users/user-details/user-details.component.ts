@@ -1,6 +1,7 @@
 import { MessageService } from 'primeng/api';
-import { UsersService } from './../../../../core/services/features/users.service';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { resetUser } from 'src/app/core/store/actions';
 
 @Component({
   selector: 'app-user-details',
@@ -9,31 +10,36 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   providers: [MessageService],
 })
 export class UserDetailsComponent {
-  // ======================== decoratores ============================
-  @Input() user: any;
-  @Output() closeDetails = new EventEmitter<any>();
   // ======================== Initializations ============================
-  updateVisible: boolean = false;
-  isDeleteUser: boolean = false;
+  dialogVisible: boolean = false; //check dialog visibality
+  isDeleteUser: boolean = false; //check if i want to delete or update
+  user: any; //current user info
+
+  constructor(private store: Store) {
+    this.store.subscribe((res: any) => {
+      this.user = res.user.user; //gt user info from store
+    });
+  }
+
   // ================ Functions ===================
-  // close Details
+  // close Details section
   closeDetailsSection() {
-    this.closeDetails.emit(-1);
+    this.store.dispatch(resetUser()); //reset user in store
   }
 
   // Delete user
   deleteUser() {
-    this.updateVisible = true;
+    this.dialogVisible = true;
     this.isDeleteUser = true;
   }
   // Update user
   updateUser() {
-    this.updateVisible = true;
+    this.dialogVisible = true;
     this.isDeleteUser = false;
   }
 
-  // close Update
-  closeUpdate() {
-    this.updateVisible = false;
+  // close Update and delete dialog
+  closeDialog() {
+    this.dialogVisible = false;
   }
 }

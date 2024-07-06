@@ -11,6 +11,7 @@ import { UsersComponent } from './users/users.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
 import { UserDetailsComponent } from './users/user-details/user-details.component';
 import { SharedModule } from '../shared/shared.module';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [UsersComponent, UsersListComponent, UserDetailsComponent],
@@ -21,7 +22,8 @@ import { SharedModule } from '../shared/shared.module';
     PasswordModule,
     InputTextModule,
     ToastModule,
-    SharedModule
+    SharedModule,
+    DialogModule
   ],
 })
 export class PagesModule {}

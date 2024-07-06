@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class BaseService {
-  protected http: HttpClient;
+  public http: HttpClient;
   private readonly baseUrl: any;
 
   constructor(injector: Injector) {
@@ -16,7 +16,7 @@ export class BaseService {
     this.baseUrl = environment.baseUrl;
   }
 
-  protected get<T>(
+  public get<T>(
     url: string,
     data?: any,
     responseType?: any
@@ -24,7 +24,7 @@ export class BaseService {
     return this.http.get<any>(`${this.baseUrl}/${url}`, data);
   }
 
-  protected post<T>(
+  public post<T>(
     url: string,
     data?: any,
     responseType?: any,
@@ -33,12 +33,12 @@ export class BaseService {
     return this.http.post<T>(`${this.baseUrl}/${url}`, data);
   }
 
-  protected put<T>(url: string, data?: any): Observable<T> {
+  public put<T>(url: string, data?: any): Observable<T> {
     return this.http
       .put<IHttpResponse<T>>(`${this.baseUrl}/${url}`,data)
       .pipe(map((res) => res.content));
   }
-  protected delete<T>(url: string, data?: any): Observable<T> {
+  public delete<T>(url: string, data?: any): Observable<T> {
     return this.http
       .delete<IHttpResponse<T>>(
         `${this.baseUrl}/${url}`
@@ -46,7 +46,7 @@ export class BaseService {
       .pipe(map((res) => res.content));
   }
 
-  protected toQueryString(obj: object): string {
+  public toQueryString(obj: object): string {
     return Object.keys(obj)
       .filter((key) => obj[key as keyof typeof obj] != undefined)
       .map((key) => key + '=' + obj[key as keyof typeof obj])

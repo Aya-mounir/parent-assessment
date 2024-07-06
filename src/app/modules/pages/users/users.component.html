@@ -1,4 +1,5 @@
 <div class="users_page w-100">
+  <p-toast></p-toast>
   <div class="bread_crumb py-2 mb-4 w-100">
     <div class="container">
       <p class="links"><span>Home</span> / <span>Dashboard</span></p>
@@ -21,9 +22,7 @@
   <div class="container users_list d-flex p-0 flex-wrap">
     <!-- users List -->
     <app-users-list
-      (userId)="getUserId($event)"
       class="list"
-      [selectedUser]="user"
       [ngClass]="user.id == -1 ? 'w-100' : 'part'"
     ></app-users-list>
     <!-- users List End -->
@@ -32,8 +31,6 @@
     <app-user-details
       *ngIf="user.id != -1"
       class="details"
-      (closeDetails)="closeDetails()"
-      [user]="user"
     ></app-user-details>
     <!-- user details End -->
   </div>
@@ -41,10 +38,10 @@
 
 <!-- Add User -->
 <app-users-dialog
-*ngIf="addNewVisible"
   [visible]="addNewVisible"
   (close)="closeAddNew()"
-  [user]="{id:-1}"
   [isDelete]="false"
+  [isUpdate]="false"
+  [isAdd]="true"
 ></app-users-dialog>
 <!-- Add User End -->
