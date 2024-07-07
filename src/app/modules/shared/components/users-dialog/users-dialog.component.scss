@@ -31,7 +31,7 @@ width: 100%;
 }
 ::ng-deep {
   .p-dialog-mask.p-component-overlay {
-    background: rgba(52, 64, 84, 0.7);
+    background: rgba(0,0,0,0.5);
     // backdrop-filter: blur(8px);
   }
   .p-dialog-content {
@@ -54,7 +54,7 @@ width: 100%;
     overflow: visible;
     border-radius: 12px;
     align-self: stretch;
-    padding: 1.5rem !important;
+    padding: 1rem !important;
     display: flex;
     flex-direction: column;
     justify-content: center;

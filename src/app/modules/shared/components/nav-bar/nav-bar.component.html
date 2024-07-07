@@ -10,7 +10,7 @@
     <div class="pages d-flex align-items-center flex-wrap">
       <!-- Nav Items -->
       <div
-        class="nav_item py-2 mx-1"
+        class="nav_item py-2"
         [ngClass]="item.active ? 'filled' : ''"
         *ngFor="let item of navItems"
         (click)="changeStatus(item.title)"

@@ -7,6 +7,7 @@
     .user,
     .actions {
       color: $gray;
+      font-size: 0.75rem;
     }
   }
   h2 {
@@ -56,7 +57,7 @@
       position: relative;
       z-index: 10;
       i {
-        padding: 0.3rem;
+        padding: 0.4rem;
         background-color: #fff;
       }
     }

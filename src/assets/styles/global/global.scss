@@ -14,18 +14,21 @@ body {
   color: #fff;
   border-radius: 50px;
   box-shadow: #00000047 0px 2px 5px;
+  padding: 0.5rem 1.5rem;
   &:hover{
-    background-color: $hover_main;
+    background-color: #8d44ada5;
   }
 }
 
 // outlined button style
 .outlined {
-  background-color: #fff;
+  background-color: #F5F5F5;
   color:$main_color;
   border-radius: 50px;
   border: 1px solid $main_color;
   border-radius: 3px;
+  box-shadow: #00000047 0px 2px 5px;
+
   &:hover{
     background-color: $main_color !important;
     color: #fff !important;
@@ -45,23 +48,23 @@ button {
   width: 100%;
   border-radius: 8px;
   color: $gray;
-  margin-bottom: 1.5rem !important;
+  margin-bottom: 1.25rem !important;
   label {
     display: block;
     color: $gray;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    margin-bottom: 5px;
   }
   input {
     width: 100%;
     border: 1px solid $input_border;
-    border-radius: 6px;
+    border-radius: 3px;
     color: $dark_gray;
-    padding: 8px;
+    padding: 7px;
     font-size: 1rem;
     &::placeholder {
       color: $gray;
-      font-size: 1rem;
+      font-size: 0.9375rem;
     }
     &:focus {
       outline-color: $main_color;

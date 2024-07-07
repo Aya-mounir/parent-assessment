@@ -28,7 +28,7 @@ const routes: Routes = [
       },
 
     ],
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
   },
   {path: '**', redirectTo: 'auth'},
 ];

@@ -58,82 +58,107 @@ export class UsersDialogComponent {
   //  ======================= Functions =======================
   // emit to close dialog
   cancel() {
+    // reset form
+    this.resetForm();
     this.close.emit(false);
   }
 
   onSubmit() {
-    // Add loader
-    this.loading = true;
-
-    if (this.userForm.valid) {
-      // if form Valid
-
-      // body of request data
-      const body = {
-        name: this.userForm.value.name,
-        job: this.userForm.value.job,
-      };
-      if (this.isUpdate) {
-        // Update User
-        this._UsersService.updateUser(this.user.id, body).subscribe(
-          (res: any) => {
-            this._MessageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: `User Updated Successfuly!`,
-            });
-
-            // close dialog after success
-            this.close.emit(false);
-            //  stop loader
-            this.loading = false;
-          },
-          (err) => {
-            //  stop loader
-            this.loading = false;
-            this._MessageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: err.error.error
-                ? err.error.error
-                : `Something went wrong!`,
-            });
-          }
-        );
-      } else {
-        // Add User
-        this._UsersService.updateUser(this.user.id, body).subscribe(
-          (res: any) => {
-            this._MessageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: `User Added Successfuly!`,
-            });
-            // close dialog after success
-            this.close.emit(false);
-            //  stop loader
-            this.loading = false;
-          },
-          (err) => {
-            //  stop loader
-            this.loading = false;
-            this._MessageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: err.error.error
-                ? err.error.error
-                : `Something went wrong!`,
-            });
-          }
-        );
-      }
-    } else {
-      // if form does not valid
+    if (this.userForm.value.name == '') {
       this._MessageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: `Some thing went wrong!`,
+        detail: `Name Field is Required!`,
       });
+    }
+    if (this.userForm.value.job == '') {
+      this._MessageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: `Job Field is Required!`,
+      });
+    }
+
+    // if fields is not empty
+    if (this.userForm.value.name != '' && this.userForm.value.job != '') {
+      // Add loader
+      this.loading = true;
+
+      if (this.userForm.valid) {
+        // if form Valid
+
+        // body of request data
+        const body = {
+          name: this.userForm.value.name,
+          job: this.userForm.value.job,
+        };
+        if (this.isUpdate) {
+          // Update User
+          this._UsersService.updateUser(this.user.id, body).subscribe(
+            (res: any) => {
+              this._MessageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: `User Updated Successfuly!`,
+              });
+
+              // close dialog after success
+              this.close.emit(false);
+              //  stop loader
+              this.loading = false;
+            },
+            (err) => {
+              //  stop loader
+              this.loading = false;
+              this._MessageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: err.error.error
+                  ? err.error.error
+                  : `Something went wrong!`,
+              });
+            }
+          );
+        } else {
+          // Add User
+          this._UsersService.updateUser(this.user.id, body).subscribe(
+            (res: any) => {
+              this._MessageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: `User Added Successfuly!`,
+              });
+              // close dialog after success
+              this.close.emit(false);
+              //  stop loader
+              this.loading = false;
+
+              // reset form
+              this.resetForm();
+            },
+            (err) => {
+              console.log(err);
+
+              //  stop loader
+              this.loading = false;
+              this._MessageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: err.error.error
+                  ? err.error.error
+                  : `Something went wrong!`,
+              });
+            }
+          );
+        }
+      } else {
+        // if form does not valid
+        this._MessageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `Some thing went wrong!`,
+        });
+      }
     }
   }
 

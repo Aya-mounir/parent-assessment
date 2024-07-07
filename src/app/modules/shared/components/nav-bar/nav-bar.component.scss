@@ -7,30 +7,32 @@
   z-index: 2;
   .logo {
     img {
-      width: 2.8rem;
-      height: 2.8rem;
+      width: 3.2rem;
+      height: 3.2rem;
     }
     .logo_title {
       color: $main_color;
       text-transform: uppercase;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 400;
     }
   }
   .pages {
     .nav_item {
       text-transform: uppercase;
-      font-size: 1rem;
+      font-size: 0.9375rem;
       font-weight: 400;
-      padding: 1.2rem;
+      padding: 0 0.46875rem 0 0.46875rem;
+      margin: 0 0.46875rem 0 0.46875rem;
       cursor: pointer;
       &:hover{
-        background-color: $hover_main;
+        background-color: #8d44ada5;
         color: #fff;
         border-radius: 50px;
         box-shadow: #00000047 0px 2px 5px;
 
       }
     }
+
   }
 }
