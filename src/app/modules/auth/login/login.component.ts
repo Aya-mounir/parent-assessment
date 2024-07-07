@@ -67,7 +67,7 @@ export class LoginComponent {
           this._MessageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: err.error ? err.error.error : 'Something went wrong!',
+            detail: err.error.error ? err.error.error : 'Something went wrong!',
           });
         }
       );
